@@ -114,7 +114,7 @@ body {
 <div class="container">
         <div class="button-container">
             <!-- Link to go back to admin dashboard -->
-            <a href="affichecars.php" class="btn btn-primary back-btn">Back to  Dashboard</a>
+            <a href="admin.php" class="btn btn-primary back-btn">Back to  Dashboard</a>
         </div>
 
     <div class="car-container">
@@ -129,7 +129,7 @@ body {
                 <!-- Bouton pour supprimer la voiture -->
                 <a href="supprimer.php?id=<?php echo $car['id']; ?>" class="btn btn-danger">Delete</a>
 
-                <a href="#?id=<?php echo $car['id']; ?>" class="btn btn-primary">Update</a>
+                <a href="update.php?id=<?php echo $car['id']; ?>" class="btn btn-primary">Update</a>
             </div>
         <?php endforeach; ?>
     </div>

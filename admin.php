@@ -66,7 +66,9 @@ try {
             <div class="card-body">
                 <h5 class="card-title">Car List</h5>
                 <p class="card-text">View and manage cars.</p>
-                <a href="affichecars.php" class="btn btn-primary">Go to Car List</a>
+                <a href="listVoiture.php" class="btn btn-primary">Go to Car List</a>
+                <a href="ajouterVoiture.php" class="btn btn-primary">Add a New car</a>
+                
             </div>
         </div>
 

@@ -96,7 +96,7 @@
         </form>
 
         <!-- Add a link to go back to the list of cars -->
-        <a href="affichecars.php" class="btn btn-secondary">Back to Car List</a>
+        <a href="admin.php" class="btn btn-secondary">Back to Car List</a>
     </div>
 
     <!-- Add the link to Bootstrap JS and necessary scripts -->

@@ -107,7 +107,7 @@ $cheminCompletImage = $cheminDossierImages . $nomFichierImage;
         <img src="<?php echo $cheminCompletImage; ?>" alt="Image de la voiture">
 
         <!-- Bouton pour supprimer la voiture -->
-        <a href="#?id=<?php echo $resultat['id']; ?>" class="btn btn-danger">Rent</a>
+        <a href="formulaire_rant.php?id=<?php echo $resultat['id']; ?>" class="btn btn-danger">Rent</a>
         <a href="cars.php?id=<?php echo $resultat['id']; ?>" class="btn btn-return">go back</a>
     </div>
 
