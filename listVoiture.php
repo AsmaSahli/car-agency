@@ -129,7 +129,7 @@ body {
                 <!-- Bouton pour supprimer la voiture -->
                 <a href="supprimer.php?id=<?php echo $car['id']; ?>" class="btn btn-danger">Delete</a>
 
-                <a href="update.php?id=<?php echo $car['id']; ?>" class="btn btn-primary">Update</a>
+                <a href="updatevoiture.php?id=<?php echo $car['id']; ?>" class="btn btn-primary">Update</a>
             </div>
         <?php endforeach; ?>
     </div>
