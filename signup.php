@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = mysqli_stmt_init($data);
 
     if (mysqli_stmt_prepare($stmt, $sql)) {
-        mysqli_stmt_bind_param($stmt, "ssisssss", $nom, $prenom, $id, $title, $email, $tel, $dob, $password);
+        mysqli_stmt_bind_param($stmt, $nom, $prenom, $id, $title, $email, $tel, $dob, $password);
         mysqli_stmt_execute($stmt);
 
         // Close the statement
