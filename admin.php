@@ -1,10 +1,14 @@
 <?php
+// Start the session to maintain user login state
 session_start();
+
+// Check if the "nom" (name) session variable is set, if not, redirect to the login page
 if (!isset($_SESSION["nom"])) {
     header("Location: index.php");
     exit();
 }
 
+// Check if the logout form is submitted
 if (isset($_POST['logout'])) {
     // Destroy the session and redirect to the login page
     session_destroy();
@@ -12,15 +16,19 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
+// Connect to the MySQL database
 try {
     $db = new PDO('mysql:host=localhost;dbname=car_agency;charset=utf8', 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Query to select all users from the "user" table
     $sqlQuery = "SELECT * FROM user";
     $requete = $db->prepare($sqlQuery);
     $requete->execute();
+    // Fetch all users as associative arrays
     $users = $requete->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
+    // Display an error message and terminate the script if there's an exception
     die('Erreur : ' . $e->getMessage());
 }
 ?>
@@ -52,8 +60,10 @@ try {
 </head>
 <body>
     <div class="container">
+        <!-- Display a welcome message with the user's name -->
         <h2>Welcome, <?php echo $_SESSION["nom"]; ?></h2>
 
+        <!-- Cards for different sections -->
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">User List</h5>
@@ -68,7 +78,6 @@ try {
                 <p class="card-text">View and manage cars.</p>
                 <a href="listVoiture.php" class="btn btn-primary">Go to Car List</a>
                 <a href="ajouterVoiture.php" class="btn btn-primary">Add a New car</a>
-                
             </div>
         </div>
 
@@ -76,7 +85,7 @@ try {
             <div class="card-body">
                 <h5 class="card-title">Bookings</h5>
                 <p class="card-text">View and manage bookings.</p>
-                <a href="booking.php" class="btn btn-primary">Go to Bookings</a>
+                <a href="commandsAdmin.php" class="btn btn-primary">Go to Bookings</a>
             </div>
         </div>
 

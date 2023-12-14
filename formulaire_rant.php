@@ -306,15 +306,26 @@ $cheminCompletImage = $cheminDossierImages . $nomFichierImage;
                     <label for="returnDateTime">Return Date and Time</label>
                     <input type="datetime-local" class="form-control" id="returnDateTime" name="returnDateTime" placeholder="Return Date and Time" required>
                 </div>
+
+                <div class="form-group">
+            <label for="drivingLicenseNumber">Driving License Number</label>
+            <input type="text" class="form-control" id="drivingLicenseNumber" name="drivingLicenseNumber" placeholder="Driving License Number" required>
+        </div>
+
+
+
                 <div id="error-message" class="error-message"></div>
-                <button type="submit" class="btn-light">Check if the car is available</button>
+                <button type="submit" class="btn-light" >Check if the car is available</button>
             <!-- Bouton pour confirmer et ajouter à la base de données -->
-            <button type="button" id="confirmButton" class="btn btn-danger confirmation-button disabled">Confirmed</button>
+            <button type="button" id="confirmButton" class="btn btn-danger confirmation-button disabled" onclick="confirmReservation()" >Confirmed</button><br>
            
+            
+   
             <div id="confirmationMessage" class="confirmation-message">
                 <p class="blink">The car is available on this date.</p>
             </div>
             </form>
+            <button type="submit" class="btn-light" onclick="window.location.href = "cars.php"">Go Back to Car Rantels</button>
             <!-- Élément pour afficher le prix TTC -->
             <div style='text-align: center; font-size: 24px; font-weight: bold; margin-top: 20px; color: #007bff;' id="prixTTC"></div>
         </div>
@@ -355,6 +366,30 @@ $cheminCompletImage = $cheminDossierImages . $nomFichierImage;
     ?>
 
     <script>
+    function confirmReservation() {
+    // Get the prixTTC value without the label
+    var prixTTCValue = parseFloat(document.getElementById('prixTTC').innerText.replace('Prix TTC:', '').trim());
+
+    // Get the drivingLicenseNumber value
+    var drivingLicenseNumber = document.getElementById('drivingLicenseNumber').value;
+
+    // URL encode the values to make sure they are safe for the URL
+    var encodedPrixTTC = encodeURIComponent(prixTTCValue);
+    var encodedDrivingLicenseNumber = encodeURIComponent(drivingLicenseNumber);
+
+    // Get the pickupDateTime and returnDateTime values
+    var pickupDateTimeValue = document.getElementById('pickupDateTime').value;
+    var returnDateTimeValue = document.getElementById('returnDateTime').value;
+
+    // URL encode the values to make sure they are safe for the URL
+    var encodedPickupDateTime = encodeURIComponent(pickupDateTimeValue);
+    var encodedReturnDateTime = encodeURIComponent(returnDateTimeValue);
+
+    // Redirect to the facture.php page with parameters
+    window.location.href = "facture.php?id=<?php echo $resultat['id']; ?>&prixTTC=" + encodedPrixTTC +
+        "&pickupDateTime=" + encodedPickupDateTime + "&returnDateTime=" + encodedReturnDateTime + "&drivingLicenseNumber=" + encodedDrivingLicenseNumber;
+}
+
 
 
     
@@ -385,6 +420,12 @@ $cheminCompletImage = $cheminDossierImages . $nomFichierImage;
                 toggleConfirmationButton(false); // Désactiver le bouton
                 return false;
             }
+            var drivingLicenseNumber = document.getElementById('drivingLicenseNumber').value;
+    if (drivingLicenseNumber.trim() === "") {
+        displayErrorMessage('Driving License Number is required.');
+        toggleConfirmationButton(false); // Disable the button
+        return false;
+    }
 
             // Aucune erreur, réinitialiser le message d'erreur et activer le bouton
             displayErrorMessage('');

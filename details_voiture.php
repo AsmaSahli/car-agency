@@ -1,38 +1,40 @@
 <?php
 session_start();
+// Check if user is not logged in, redirect to index.php
 if (!isset($_SESSION["nom"])) {
     header("Location: index.php");
     exit();
 }
 
 try {
+    // Connect to the database
     $db = new PDO('mysql:host=localhost;dbname=car_agency;charset=utf8', 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Assurez-vous de valider et de sécuriser l'ID de la voiture
+    // Validate and secure the car ID
     $id_voiture = isset($_GET['id']) ? $_GET['id'] : null;
 
-    // Requête SQL pour récupérer les détails de la voiture
+    // SQL query to retrieve car details
     $sqlQuery = "SELECT * FROM voiture WHERE id = :id";
     $requete = $db->prepare($sqlQuery);
     $requete->bindParam(':id', $id_voiture);
     $requete->execute();
     $resultat = $requete->fetch(PDO::FETCH_ASSOC);
 
-    // Fermeture de la connexion à la base de données
+    // Close the database connection
     $db = null;
 
 } catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
+    die('Error: ' . $e->getMessage());
 }
 
-// Vérifiez si la voiture a été trouvée
+// Check if the car is found
 if (!$resultat) {
-    // Gérer le cas où la voiture n'a pas été trouvée
-    die('Voiture non trouvée');
+    // Handle the case where the car is not found
+    die('Car not found');
 }
 
-// Génération du chemin complet de l'image
+// Generate the full path of the image
 $cheminDossierImages = 'assets/';
 $nomFichierImage = $resultat['image'];
 $cheminCompletImage = $cheminDossierImages . $nomFichierImage;

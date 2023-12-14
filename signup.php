@@ -1,41 +1,44 @@
 <?php
+// Database connection details
 $host = "localhost";
 $user = "root";
 $password = "";
 $dbName = "car_agency";
 
-session_start();
+// Connect to the database
+$data = new mysqli($host, $user, $password, $dbName);
 
-$data = mysqli_connect($host, $user, $password, $dbName);
-
-if (!$data) {
-    die("Connection Failed: " . mysqli_connect_error());
+// Check if the connection is successful
+if ($data->connect_error) {
+    die("Connection Failed: " . $data->connect_error);
 }
 
+// Check if the form is submitted using POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = mysqli_real_escape_string($data, $_POST["signupFirstName"]);
-    $prenom = mysqli_real_escape_string($data, $_POST["signupLastName"]);
-    $id = mysqli_real_escape_string($data, $_POST["signupID"]);
-    $title = mysqli_real_escape_string($data, $_POST["signupTitle"]);
-    $email = mysqli_real_escape_string($data, $_POST["signupEmail"]);
-    $tel = mysqli_real_escape_string($data, $_POST["signupTelephone"]);
-    $dob = mysqli_real_escape_string($data, $_POST["dob"]);
-    $password = mysqli_real_escape_string($data, $_POST["signupPassword"]);
+    // Get user input from the form (you may add more validation as needed)
+    $nom = $_POST["signupFirstName"];
+    $prenom = $_POST["signupLastName"];
+    $id = $_POST["signupID"];
+    $title = $_POST["signupTitle"];
+    $email = $_POST["signupEmail"];
+    $tel = $_POST["signupTelephone"];
+    $dob = $_POST["dob"];
+    $password = $_POST["signupPassword"];
 
-    // Use prepared statement to prevent SQL injection
+    // SQL query to insert user data into the database
     $sql = "INSERT INTO user (nom, prenom, id, title, email, tel, dob, password, usertype) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'user')";
-    $stmt = mysqli_stmt_init($data);
 
-    if (mysqli_stmt_prepare($stmt, $sql)) {
-        mysqli_stmt_bind_param($stmt, $nom, $prenom, $id, $title, $email, $tel, $dob, $password);
-        mysqli_stmt_execute($stmt);
+    // Prepare the SQL statement
+    $stmt = $data->prepare($sql);
 
-        // Close the statement
-        mysqli_stmt_close($stmt);
+    // Bind parameters
+    $stmt->bind_param("ssssssss", $nom, $prenom, $id, $title, $email, $tel, $dob, $password);
 
-        // Close the connection
-        mysqli_close($data);
+    // Execute the SQL statement
+    $result = $stmt->execute();
 
+    // Check if the query was successful
+    if ($result) {
         // Display a JavaScript alert
         echo "<script>
                 alert('Account created successfully! Click OK to go back to the Home Page');
@@ -44,10 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Ensure that the script stops after the JavaScript redirect
     } else {
         // Handle errors here
-        echo "Error: " . mysqli_error($data);
+        echo "Error: " . $stmt->error;
     }
+
+    // Close the statement
+    $stmt->close();
 }
+
+// Close the connection
+$data->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -272,7 +283,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 </div>
 
-            <!-- Include your existing footer here -->
 
 </div>
 <?php

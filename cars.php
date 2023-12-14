@@ -195,13 +195,13 @@ try {
 
     <title>Car Rental Agency</title>
 </head>
-
 <body>
 
     <div class="container-fluid">
 
         <!-- Grey Section -->
         <div class="row grey-section">
+            <!-- Display a message encouraging users to rent a car -->
             <div class="col">
                 <span>Rent a car and enjoy the open road</span>
             </div>
@@ -209,13 +209,19 @@ try {
 
         <!-- White Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
+            <!-- Car Rentals Navbar -->
             <a class="navbar-brand" href="index.html">Car Rentals</a>
+
+            <!-- Navbar Toggler Button for Responsive Design -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Links and Search Form -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
+                    <!-- Navigation Links -->
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
@@ -229,34 +235,35 @@ try {
                         <a class="nav-link" href="logout.php">LOGOUT</a>
                     </li>
                 </ul>
+
+                <!-- Search Form for Cars by Brand -->
                 <form class="form-inline my-2 my-lg-0" action="cars.php" method="GET">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search by brand" aria-label="Search" name="search">
-    <button class="btn btn-light my-2 my-sm-0" type="submit" style="color: #000000;">Search</button>
-</form>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search by brand" aria-label="Search"
+                        name="search">
+                    <button class="btn btn-light my-2 my-sm-0" type="submit" style="color: #000000;">Search</button>
+                </form>
             </div>
         </nav>
-       
-       
 
-    <div class="car-container">
-        
-        <?php foreach ($cars as $car): ?>
-            <div class="car">
-            <h3><?php echo $car['marque'] . '<br>' . $car['modele']; ?></h3>
+        <!-- Car Container Section -->
+        <div class="car-container">
+            <?php foreach ($cars as $car): ?>
+                <!-- Individual Car Card -->
+                <div class="car">
+                    <!-- Display Car Brand and Model -->
+                    <h3><?php echo $car['marque'] . '<br>' . $car['modele']; ?></h3>
 
-                <img src="assets/<?php echo $car['image']; ?>" alt="Image de la voiture">
-                <!-- Lien vers les détails de la voiture -->
-                <a href="details_voiture1.php?id=<?php echo $car['id']; ?>" class="btn btn-info">Details</a>
-               
+                    <!-- Display Car Image -->
+                    <img src="assets/<?php echo $car['image']; ?>" alt="Car Image">
 
-                <a href="formulaire_rant.php?id=<?php echo $car['id']; ?>" class="btn btn-primary">Rent</a>
-            </div>
-        <?php endforeach; ?>
-    </div>
+                    <!-- Link to Car Details Page -->
+                    <a href="details_voiture1.php?id=<?php echo $car['id']; ?>" class="btn btn-info">Details</a>
 
-
-
-
+                    <!-- Link to Car Rental Form -->
+                    <a href="formulaire_rant.php?id=<?php echo $car['id']; ?>" class="btn btn-primary">Rent</a>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
     </div>
 

@@ -1,44 +1,42 @@
 <?php
+// Check if the form with the name 'ajouter' is submitted
 if (isset($_POST['ajouter'])) {
-    // Connexion à la base de données
+    // Database connection
     try {
         $db = new PDO('mysql:host=localhost;dbname=car_agency;charset=utf8', 'root', '');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Récupération des données du formulaire
+        // Retrieve form data
         $modele = $_POST['modele'];
         $marque = $_POST['marque'];
-        $annee= $_POST['annee'];
-        $couleur= $_POST['couleur'];
-        $prix_journalier= $_POST['prix_journalier'];
-        
+        $annee = $_POST['annee'];
+        $couleur = $_POST['couleur'];
+        $prix_journalier = $_POST['prix_journalier'];
 
-        // Ajoutez d'autres champs du formulaire ici
+        // Add other form fields here
 
-        // Traitement de l'image
-        $uploadDir = 'C:/xampp/htdocs/project/assets/';
- // Remplacez par le chemin réel sur votre serveur
+        // Image processing
+        $uploadDir = 'C:/xampp/htdocs/project/assets/'; // Replace with the actual path on your server
         $uploadFile = $uploadDir . basename($_FILES['image']['name']);
 
-        // Vérifie si le fichier a été correctement téléchargé
+        // Check if the file is uploaded successfully
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            // Insertion des données dans la base de données
+            // Insert data into the database
             $sql = "INSERT INTO voiture (modele, marque, annee, couleur, prix_journalier, image) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($sql);
             $stmt->execute([$modele, $marque, $annee, $couleur, $prix_journalier, $_FILES['image']['name']]);
-           
 
-            // Fermeture de la connexion à la base de données
+            // Close the database connection
             $db = null;
 
-            // Redirection vers la liste des voitures
+            // Redirect to the list of cars
             header("Location: ajouterVoiture.php");
             exit();
         } else {
-            echo "Erreur lors du téléchargement de l'image.";
+            echo "Error uploading the image.";
         }
     } catch (Exception $e) {
-        echo 'Erreur : ' . $e->getMessage();
+        echo 'Error: ' . $e->getMessage();
     }
 }
 ?>
