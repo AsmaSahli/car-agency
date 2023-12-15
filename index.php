@@ -29,6 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($row) {
             $_SESSION["nom"] = $nom;
+            if (isset($row["id"])) {
+              $_SESSION["id"] = $row["id"];
+          } else {
+              // Gérer le cas où "id" n'est pas défini
+              echo "Error: User ID not found";
+              exit();
+          }
+
 
             if ($row["usertype"] == "user") {
                 header("Location: cars.php");

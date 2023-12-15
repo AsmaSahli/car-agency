@@ -51,7 +51,7 @@ body {
             font-size: 18px;
             margin: 15px;
             cursor: pointer;
-            background-color: #007bff;
+            background-color:;
             color: white;
             border: none;
             border-radius: 5px;
@@ -107,6 +107,7 @@ body {
         .back-btn {
             margin-top: 20px;
         }
+       
     </style>
 </head>
 
